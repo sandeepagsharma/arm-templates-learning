@@ -52,5 +52,5 @@ jobs:
           subscriptionId: 6a93b522-87de-439e-a105-0422c1795f27
           template: ./arm-templates/virtualmachine.json
           parameters: 
-            adminPassword= ${{ secreets.VM_ADMIN_PASSWORD }}
+            adminPassword= ${{ secrets.VM_ADMIN_PASSWORD }}
 
