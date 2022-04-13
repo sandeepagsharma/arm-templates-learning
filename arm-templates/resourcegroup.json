@@ -20,14 +20,14 @@
     "functions": [],
     "variables": {},
     "resources": [
-    {
-        "name": "[parameters('resourceGroupName')]",
-        "type": "Microsoft.Resources/resourceGroups",
-        "apiVersion": "2021-04-01",
-        "location": "[parameters('location')]",
-        "dependsOn": [],
-        "tags": {}
-    }
+        {
+            "name": "[parameters('resourceGroupName')]",
+            "type": "Microsoft.Resources/resourceGroups",
+            "apiVersion": "2021-04-01",
+            "location": "[parameters('location')]",
+            "dependsOn": [],
+            "tags": {}
+        }
     ],
     "outputs": {}
 }
