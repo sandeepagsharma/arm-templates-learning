@@ -7,9 +7,9 @@ on:
   workflow_dispatch:
 
 env:
-  resource_group_name: ${{ env.resource_group_name }}
-  location: ${{ env.location }}
-  subscriptionId: ${{ env.subscriptionId}}
+  resource_group_name: rg-githubactions
+  location: "Australia East"
+  subscriptionId: 6a93b522-87de-439e-a105-0422c1795f27
 
 jobs:
   armDeploy:
@@ -23,15 +23,15 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Deploy Resource Group ${{ env.resource_group_name }}
+      - name: Deploy Resource Group ${{ env.resource_group_name}}
         uses: Azure/arm-deploy@v1
         with:
           scope: subscription
-          subscriptionId: ${{ env.subscriptionId}}
-          region: ${{ env.location }}
+          subscriptionId: ${{ env.subscriptionid}}
+          region: Australia East
           template: ./arm-templates/resourcegroup.json
           parameters:
-            location=${{ env.location }}
+            location="Australia East"
             resourceGroupName=${{ env.resource_group_name }}
           deploymentName: ${{ env.resource_group_name }}
 
@@ -41,7 +41,7 @@ jobs:
         with:
           scope: resourcegroup
           resourcegroupname: ${{ env.resource_group_name }}
-          subscriptionId: ${{ env.subscriptionId}}
+          subscriptionId: ${{ env.subscriptionid}}
           template: ./arm-templates/storageaccount.json
           parameters: 
             ./arm-templates/storageaccount.parameters.json
@@ -54,7 +54,7 @@ jobs:
         with:
           scope: resourcegroup
           resourcegroupname: ${{ env.resource_group_name }}
-          subscriptionId: ${{ env.subscriptionId}}
+          subscriptionId: ${{ env.subscriptionid}}
           template: ./arm-templates/virtualmachine.json
           parameters: 
             adminPassword=${{ secrets.VM_ADMIN_PASSWORD }}
