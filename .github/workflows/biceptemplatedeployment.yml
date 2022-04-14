@@ -10,7 +10,7 @@ env:
   subscriptionId: 6a93b522-87de-439e-a105-0422c1795f27
 
 jobs:
-  bicepAzCliDeploy:
+  bicepArmDeploy:
     name: Deploy Bicep using Azure CLI
     runs-on: ubuntu-latest
     env:
@@ -25,17 +25,17 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Deploy Resource Group using Azure CLI action
-        uses: Azure/cli@v1
+      - name: Deploy Resource Group ${{ env.resource_group_name}}
+        uses: Azure/arm-deploy@v1
         with:
-          inlinescript:
-            az deployment sub create \
-            --name ${{ env.resource_group_name }} \
-            --location "${{ env.location }}" \
-            --template-file ./bicep-templates/resourcegroup.bicep \
-            --parameters \
-            resourceGroupName=${{ env.resource_group_name }} \
+          scope: subscription
+          subscriptionId: ${{ env.subscriptionid}}
+          region: Australia East
+          template: ./biecp-templates/resourcegroup.bicep
+          parameters:
             location="${{ env.location }}"
+            resourceGroupName=${{ env.resource_group_name }}
+          deploymentName: ${{ env.resource_group_name }}
 
  
 
