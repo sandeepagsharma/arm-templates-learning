@@ -1,0 +1,45 @@
+name: "Bicep Deploy Workflow"
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  subscriptionId: 6a93b522-87de-439e-a105-0422c1795f27
+
+jobs:
+  bicepAzCliDeploy:
+    name: Deploy Bicep using Azure CLI
+    runs-on: ubuntu-latest
+    env:
+      location: Australia East
+      resource_group_name: rg-bicep-githubactions
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Login to Azure Environment
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy Resource Group using Azure CLI action
+        uses: Azure/cli@v1
+        with:
+          inlinescript:
+            az deployment sub create \
+            --name ${{ env.resource_group_name }} \
+            --location ${{ env.location }} \
+            --template-file ./bicep-templates/resourcegroup.bicep \
+            --parameters \
+            resourceGroupName=${{ env.resource_group_name }} \
+            location=${{ env.location }}
+
+ 
+
+
+
+
+
